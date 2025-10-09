@@ -3,34 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Licznik.Views.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-
-            <Label
-                Text="0"
-                x:Name="CounterLabel" 
-                HorizontalTextAlignment="Center"
-                FontSize="32"/>
-
-            <HorizontalStackLayout
-                Spacing="25"
-                HorizontalOptions="Center">
-
-                <Button
-                    x:Name="PlusBtn"
-                    Text="+" 
-                    Clicked="OnPlusBtnClicked"
-                    HorizontalOptions="Center"
-                    />
-
-                <Button
-                    x:Name="MinusBtn"
-                    Text="-" 
-                    Clicked="OnMinusBtnClicked"
-                    HorizontalOptions="Center" />
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+    <VerticalStackLayout Padding="10">
+        <Button Text="Dodaj licznik" Clicked="OnAddCounterClicked"/>
+        <ScrollView>
+            <VerticalStackLayout x:Name="CountersLayout"/>
+        </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>
