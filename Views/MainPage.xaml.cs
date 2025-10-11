@@ -1,17 +1,28 @@
 ﻿using Licznik.Backend;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Licznik.Views
 {
     public partial class MainPage : ContentPage
     {
-        readonly List<Counter> counters = new List<Counter>();
+        readonly List<Counter> counters = [];
         int counterIndex = 1;
 
         public MainPage()
         {
             InitializeComponent();
-            AddCounter("counter1", 0);
+            var res = Utils.FromXML();
+            counters = res.counters;
+            counterIndex = res.index;
+
+            foreach (var counter in counters.ToList())
+                AddCounterToUI(counter);
+        }
+
+        private void OnCounterChanged()
+        {
+            Utils.ToXML(counters, counterIndex);
         }
 
         private async void OnAddCounterClicked(object sender, EventArgs e)
@@ -27,24 +38,24 @@ namespace Licznik.Views
                 "0",
                 keyboard: Keyboard.Numeric);
 
-            if (int.TryParse(result, out int startValue)) AddCounter(name, startValue);
-            else AddCounter(name, 0);
+            int initialValue = int.TryParse(result, out int val) ? val : 0;
+            var counter = new Counter(initialValue, name);
+            counters.Add(counter);
+            AddCounterToUI(counter);
+            OnCounterChanged();
         }
 
-        private void AddCounter(string name, int startValue)
+        private void AddCounterToUI(Counter counter)
         {
-            var counter = new Counter(startValue, name);
-            counters.Add(counter);
-
-            var label = new Label
+            Label label = new Label
             {
-                Text = $"{name}: {counter.count}",
+                Text = $"{counter.name}: {counter.count}",
                 FontSize = 18,
                 HorizontalOptions = LayoutOptions.Center,
                 Margin = new Thickness(0, 20, 0, 0)
             };
 
-            var plusBtn = new Button
+            Button plusBtn = new Button
             {
                 Text = "+",
                 HorizontalOptions = LayoutOptions.Center,
@@ -54,25 +65,57 @@ namespace Licznik.Views
             plusBtn.Clicked += (s, e) =>
             {
                 counter.Increment();
-                label.Text = $"{name}: {counter.count}";
+                label.Text = $"{counter.name}: {counter.count}";
+                OnCounterChanged();
             };
 
-            var minusBtn = new Button
+            Button minusBtn = new Button
             {
                 Text = "-",
                 HorizontalOptions = LayoutOptions.Center,
                 Margin = new Thickness(5, 5, 5, 5)
             };
+
             minusBtn.Clicked += (s, e) =>
             {
                 counter.Decrement();
-                label.Text = $"{name}: {counter.count}";
+                label.Text = $"{counter.name}: {counter.count}";
+                OnCounterChanged();
+            };
+
+            Button resetBtn = new Button
+            {
+                Text = "Resetuj",
+                HorizontalOptions = LayoutOptions.Center,
+                Margin = new Thickness(5, 5, 5, 5)
+            };
+
+            resetBtn.Clicked += (s, e) =>
+            {
+                counter.count = counter.initialCount;
+                label.Text = $"{counter.name}: {counter.count}";
+                OnCounterChanged();
+            };
+
+            Button deleteBtn = new Button
+            {
+                Text = "Usuń",
+                HorizontalOptions = LayoutOptions.Center,
+                Margin = new Thickness(5, 5, 5, 5)
             };
 
             HorizontalStackLayout btns = new HorizontalStackLayout
             {
                 HorizontalOptions = LayoutOptions.Center,
-                Children = { plusBtn, minusBtn }
+                Children = { plusBtn, minusBtn, resetBtn, deleteBtn }
+            };
+
+            deleteBtn.Clicked += (s, e) =>
+            {
+                counters.Remove(counter);
+                CountersLayout.Children.Remove(label);
+                CountersLayout.Children.Remove(btns);
+                OnCounterChanged();
             };
 
             CountersLayout.Children.Add(label);

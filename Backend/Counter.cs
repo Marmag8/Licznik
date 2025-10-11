@@ -22,10 +22,25 @@ namespace Licznik.Backend
             set { _name = value; }
         }
 
+        private int _initialCount;
+        public int initialCount
+        {
+            get { return _initialCount; }
+            set { _initialCount = value; }
+        }
+
         public Counter(int count, String name)
         {
             this.count = count;
             this.name = name;
+            this.initialCount = count;
+        }
+
+        public Counter(int count, String name, int initialCount)
+        {
+            this.count = count;
+            this.name = name;
+            this.initialCount = initialCount;
         }
 
         public void Increment()
