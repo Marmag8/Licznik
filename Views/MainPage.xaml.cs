@@ -27,16 +27,16 @@ namespace Licznik.Views
         
         private async void OnAddCounterClicked(object sender, EventArgs e)
         {
-            var addCounterPage = new AddCounter
+            AddCounter addCounterPage = new AddCounter
             {
                 OnCounterAdded = (name, initialValue) =>
                 {
-                    if (name.Trim() == "")
+                    if (String.IsNullOrEmpty(name.Trim()))
                     {
                         counterIndex++;
                         name = $"counter{counterIndex}";
                     }
-                    var counter = new Counter(initialValue, name);
+                    Counter counter = new Counter(initialValue, name);
                     counters.Add(counter);
                     AddCounterToUI(counter);
                     OnCounterChanged();
