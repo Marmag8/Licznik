@@ -65,4 +65,10 @@
 		<PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\AddCounter.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

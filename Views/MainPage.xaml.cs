@@ -12,7 +12,7 @@ namespace Licznik.Views
         public MainPage()
         {
             InitializeComponent();
-            var res = Utils.FromXML();
+            (List<Counter> counters, int index) res = Utils.FromXML();
             counters = res.counters;
             counterIndex = res.index;
 
@@ -24,25 +24,25 @@ namespace Licznik.Views
         {
             Utils.ToXML(counters, counterIndex);
         }
-
+        
         private async void OnAddCounterClicked(object sender, EventArgs e)
         {
-            counterIndex++;
-            string name = $"counter{counterIndex}";
-
-            string result = await DisplayPromptAsync(
-                "Nowy licznik",
-                $"Podaj wartość początkową dla licznika {name}:",
-                "OK",
-                "Anuluj",
-                "0",
-                keyboard: Keyboard.Numeric);
-
-            int initialValue = int.TryParse(result, out int val) ? val : 0;
-            var counter = new Counter(initialValue, name);
-            counters.Add(counter);
-            AddCounterToUI(counter);
-            OnCounterChanged();
+            var addCounterPage = new AddCounter
+            {
+                OnCounterAdded = (name, initialValue) =>
+                {
+                    if (name.Trim() == "")
+                    {
+                        counterIndex++;
+                        name = $"counter{counterIndex}";
+                    }
+                    var counter = new Counter(initialValue, name);
+                    counters.Add(counter);
+                    AddCounterToUI(counter);
+                    OnCounterChanged();
+                }
+            };
+            await Navigation.PushModalAsync(addCounterPage);
         }
 
         private void AddCounterToUI(Counter counter)
