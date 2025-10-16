@@ -6,7 +6,7 @@
 
     <VerticalStackLayout Padding="10">
         <Button Text="Dodaj licznik" Clicked="OnAddCounterClicked"/>
-        <ScrollView>
+        <ScrollView HeightRequest="400">
             <VerticalStackLayout x:Name="CountersLayout"/>
         </ScrollView>
     </VerticalStackLayout>

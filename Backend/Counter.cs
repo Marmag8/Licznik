@@ -29,18 +29,45 @@ namespace Licznik.Backend
             set { _initialCount = value; }
         }
 
-        public Counter(int count, String name)
+        private int _r;
+        public int r
+        {
+            get { return _r; }
+            set { _r = value; }
+        }
+
+        private int _g;
+        public int g
+        {
+            get { return _g; }
+            set { _g = value; }
+        }
+
+        private int _b;
+        public int b
+        {
+            get { return _b; }
+            set { _b = value; }
+        }
+
+        public Counter(int count, String name, int r, int g, int b)
         {
             this.count = count;
             this.name = name;
             this.initialCount = count;
+            this.r = r;
+            this.g = g;
+            this.b = b;
         }
 
-        public Counter(int count, String name, int initialCount)
+        public Counter(int count, String name, int initialCount, int r, int g, int b)
         {
             this.count = count;
             this.name = name;
             this.initialCount = initialCount;
+            this.r = r;
+            this.g = g;
+            this.b = b;
         }
 
         public void Increment()

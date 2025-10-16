@@ -6,9 +6,22 @@
     <VerticalStackLayout Padding="20" Spacing="15">
         <Entry x:Name="Name" Placeholder="Nazwa licznika" />
         <Entry x:Name="InitialValue" Placeholder="Wartość początkowa" Keyboard="Numeric" />
-        <!--  <Slider x:Name="R" Minimum="0" Maximum="256" />
-        <Slider x:Name="G" Minimum="0" Maximum="256" />
-        <Slider x:Name="B" Minimum="0" Maximum="256" />  -->
+        <Label Text="Wprowadź wartości RGB:" />
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="R:" VerticalOptions="Center" />
+            <Slider x:Name="R" Minimum="0" Maximum="255" VerticalOptions="Center" WidthRequest="256" ValueChanged="OnRGBValueChanged" />
+            <Label x:Name="RValue" Text="0" VerticalOptions="Center" WidthRequest="40" HorizontalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="G:" VerticalOptions="Center" />
+            <Slider x:Name="G" Minimum="0" Maximum="255" VerticalOptions="Center" WidthRequest="256" ValueChanged="OnRGBValueChanged" />
+            <Label x:Name="GValue" Text="0" VerticalOptions="Center" WidthRequest="40" HorizontalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="B:" VerticalOptions="Center" />
+            <Slider x:Name="B" Minimum="0" Maximum="255" VerticalOptions="Center" WidthRequest="256" ValueChanged="OnRGBValueChanged" />
+            <Label x:Name="BValue" Text="0" VerticalOptions="Center" WidthRequest="40" HorizontalTextAlignment="Center" />
+        </HorizontalStackLayout>
         <Button Text="Dodaj licznik" Clicked="OnConfirm" />
     </VerticalStackLayout>
 </ContentPage>

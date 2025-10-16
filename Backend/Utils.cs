@@ -51,6 +51,18 @@ namespace Licznik.Backend
                 initialValueNode.InnerText = c.initialCount.ToString();
                 counterNode.AppendChild(initialValueNode);
 
+                XmlElement Rnode = doc.CreateElement("R");
+                Rnode.InnerText = c.r.ToString();
+                counterNode.AppendChild(Rnode);
+
+                XmlElement Gnode = doc.CreateElement("G");
+                Gnode.InnerText = c.g.ToString();
+                counterNode.AppendChild(Gnode);
+
+                XmlElement Bnode = doc.CreateElement("B");
+                Bnode.InnerText = c.b.ToString();
+                counterNode.AppendChild(Bnode);
+
                 root.AppendChild(counterNode);
             }
 
@@ -84,7 +96,11 @@ namespace Licznik.Backend
                         int.TryParse(counterNode.SelectSingleNode("Value")?.InnerText, out value);
                         int initialValue = 0;
                         int.TryParse(counterNode.SelectSingleNode("InitialValue")?.InnerText, out initialValue);
-                        counters.Add(new Counter(value, name, initialValue));
+                        int r = 0, g = 0, b = 0;
+                        int.TryParse(counterNode.SelectSingleNode("R")?.InnerText, out r);
+                        int.TryParse(counterNode.SelectSingleNode("G")?.InnerText, out g);
+                        int.TryParse(counterNode.SelectSingleNode("B")?.InnerText, out b);
+                        counters.Add(new Counter(value, name, initialValue, r, g, b));
                     }
                 }
 
@@ -92,7 +108,7 @@ namespace Licznik.Backend
             }
             else
             {
-                return (new List<Counter> { new Counter(0, "counter1") }, 1);
+                return (new List<Counter> { new Counter(0, "counter1", 0, 0, 255) }, 1);
             }
         }
     }

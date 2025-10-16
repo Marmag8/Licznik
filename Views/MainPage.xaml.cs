@@ -29,14 +29,14 @@ namespace Licznik.Views
         {
             AddCounter addCounterPage = new AddCounter
             {
-                OnCounterAdded = (name, initialValue) =>
+                OnCounterAdded = (name, initialValue, r, g, b) =>
                 {
                     if (String.IsNullOrEmpty(name.Trim()))
                     {
                         counterIndex++;
                         name = $"counter{counterIndex}";
                     }
-                    Counter counter = new Counter(initialValue, name);
+                    Counter counter = new Counter(initialValue, name, r, g, b);
                     counters.Add(counter);
                     AddCounterToUI(counter);
                     OnCounterChanged();
@@ -47,19 +47,22 @@ namespace Licznik.Views
 
         private void AddCounterToUI(Counter counter)
         {
+            Color color = Color.FromRgb(counter.r, counter.g, counter.b);
             Label label = new Label
             {
                 Text = $"{counter.name}: {counter.count}",
                 FontSize = 18,
                 HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(0, 20, 0, 0)
+                Margin = new Thickness(0, 20, 0, 0),
+                TextColor = color
             };
 
             Button plusBtn = new Button
             {
                 Text = "+",
                 HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(5, 5, 5, 5)
+                Margin = new Thickness(5, 5, 5, 5),
+                BackgroundColor = color
             };
 
             plusBtn.Clicked += (s, e) =>
@@ -73,7 +76,8 @@ namespace Licznik.Views
             {
                 Text = "-",
                 HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(5, 5, 5, 5)
+                Margin = new Thickness(5, 5, 5, 5),
+                BackgroundColor = color
             };
 
             minusBtn.Clicked += (s, e) =>
@@ -87,7 +91,8 @@ namespace Licznik.Views
             {
                 Text = "Resetuj",
                 HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(5, 5, 5, 5)
+                Margin = new Thickness(5, 5, 5, 5),
+                BackgroundColor = color
             };
 
             resetBtn.Clicked += (s, e) =>
@@ -101,7 +106,8 @@ namespace Licznik.Views
             {
                 Text = "Usuń",
                 HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(5, 5, 5, 5)
+                Margin = new Thickness(5, 5, 5, 5),
+                BackgroundColor = color
             };
 
             HorizontalStackLayout btns = new HorizontalStackLayout
