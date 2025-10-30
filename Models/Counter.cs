@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Licznik.Backend
+namespace Licznik.Models
 {
     internal class Counter
     {

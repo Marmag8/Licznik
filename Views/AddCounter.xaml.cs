@@ -34,12 +34,9 @@ public partial class AddCounter : ContentPage
     {
         string name = Name.Text ?? "";
         int initialValue = int.TryParse(InitialValue.Text, out int val) ? val : 0;
-        int r = 0;
-        int.TryParse(R.Value.ToString(), out r);
-        int g = 0;
-        int.TryParse(G.Value.ToString(), out g);
-        int b = 0;
-        int.TryParse(B.Value.ToString(), out b);
+        int r = (int)R.Value;
+        int g = (int)G.Value;
+        int b = (int)B.Value;
 
         OnCounterAdded?.Invoke(name, initialValue, r, g, b);
 
